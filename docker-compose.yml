@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: vk_user
       POSTGRES_PASSWORD: vk_password
     ports:
-      - "5432:5432"
+      - "55432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/01_init.sql

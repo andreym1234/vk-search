@@ -20,3 +20,11 @@ pip install -r requirements.txt
 
 ```bash
 python parser/02_clean_posts.py
+
+
+## Чанкинг документов
+
+После загрузки очищенных документов в PostgreSQL выполняется разбиение текстов на чанки:
+
+```bash
+python parser/04_chunk_documents.py --recreate

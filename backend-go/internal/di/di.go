@@ -7,6 +7,7 @@ import (
 	"go.uber.org/fx"
 	"vk-search/internal/api"
 	"vk-search/internal/api/handlers"
+	"vk-search/internal/app/ask"
 	"vk-search/internal/app/auth"
 	"vk-search/internal/app/document" 
 	"vk-search/internal/app/health"
@@ -15,6 +16,7 @@ import (
 	"vk-search/internal/infrastructure/config"
 	"vk-search/internal/infrastructure/mocks"
 	"vk-search/internal/infrastructure/postgres"
+	"vk-search/internal/infrastructure/llm"
 )
 
 func BuildApp() *fx.App {
@@ -31,23 +33,25 @@ func BuildApp() *fx.App {
 			postgres.NewUserRepository,
 			postgres.NewHealthRepository,
 			postgres.NewStatsRepository,
-			postgres.NewDocumentRepository, // Регистрируем репозиторий документов
+			postgres.NewDocumentRepository, 
 			mocks.NewSearchMockRepository,
-			mocks.NewChunkRepository,
+			llm.NewLLMClient,          
 
 			// 3. Юзкейсы (Бизнес-логика / Слой приложения)
 			auth.NewAuthUseCase,
 			search.NewSearchUseCase,
 			health.NewHealthUseCase,
 			stats.NewStatsUseCase,
-			document.NewDocumentUseCase, // Регистрируем юзкейс документов
+			document.NewDocumentUseCase,
+			ask.NewAskUseCase,          
 
 			// 4. Хендлеры и Маршрутизация (Транспортный слой)
 			handlers.NewAuthHandler,
 			handlers.NewSearchHandler,
 			handlers.NewStatsHandler,
 			handlers.NewHealthHandler,
-			handlers.NewDocumentHandler, // Регистрируем хендлер документов
+			handlers.NewDocumentHandler, 
+			handlers.NewAskHandler,      
 			api.NewRouter,
 		),
 		fx.Invoke(func(lc fx.Lifecycle, handler http.Handler, cfg *config.Config) {

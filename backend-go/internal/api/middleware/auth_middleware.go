@@ -6,14 +6,7 @@ import (
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
-)
-
-type contextKey string
-
-const (
-	UserIDKey   contextKey = "user_id"
-	RoleKey     contextKey = "role"     // Переименовали в RoleKey, так как теперь храним строку
-	UsernameKey contextKey = "username"
+	"vk-search/internal/domain"
 )
 
 func AuthMiddleware(jwtSecret []byte) func(http.Handler) http.Handler {
@@ -61,16 +54,15 @@ func AuthMiddleware(jwtSecret []byte) func(http.Handler) http.Handler {
 
 			ctx := r.Context()
 			if userID, ok := claims["user_id"].(float64); ok {
-				ctx = context.WithValue(ctx, UserIDKey, int64(userID))
+				ctx = context.WithValue(ctx, domain.UserIDKey, int64(userID))
 			}
-			
-			// Извлекаем "role" как строку ("reader", "editor", "admin") вместо числа
+
 			if role, ok := claims["role"].(string); ok {
-				ctx = context.WithValue(ctx, RoleKey, role)
+				ctx = context.WithValue(ctx, domain.RoleKey, role)
 			}
-			
+
 			if username, ok := claims["username"].(string); ok {
-				ctx = context.WithValue(ctx, UsernameKey, username)
+				ctx = context.WithValue(ctx, domain.UsernameKey, username)
 			}
 
 			next.ServeHTTP(w, r.WithContext(ctx))

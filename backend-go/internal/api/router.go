@@ -12,6 +12,7 @@ func NewRouter(authHandler *handlers.AuthHandler,
 	healthHandler *handlers.HealthHandler,
 	statsHandler *handlers.StatsHandler,
 	documentHandler *handlers.DocumentHandler,
+	askHandler *handlers.AskHandler,
 	cfg *config.Config,
 ) http.Handler {
 	mux := http.NewServeMux()
@@ -24,6 +25,7 @@ func NewRouter(authHandler *handlers.AuthHandler,
 	rbacMiddleware := middleware.RoleRequiredMiddleware("admin", "editor")
 
 	mux.Handle("GET /api/v1/search", authMiddleware(http.HandlerFunc(searchHandler.Search)))
+	mux.Handle("POST /api/v1/ask", authMiddleware(http.HandlerFunc(askHandler.Ask)))
 
 	statsChain := authMiddleware(rbacMiddleware(http.HandlerFunc(statsHandler.GetStats)))
 	mux.Handle("GET /api/v1/stats", statsChain)

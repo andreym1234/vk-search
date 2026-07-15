@@ -6,15 +6,14 @@ import (
 )
 
 type Post struct {
-	ChunkID     string    `json:"chunk_id"`
-	DocumentID  string    `json:"document_id"`
-	SourceName  string    `json:"source_name"`
-	Title       string    `json:"title"`
-	Content     string    `json:"content"`
-	URL         string    `json:"url"`
-	PublishedAt time.Time `json:"published_at"`
+    ChunkID     int64     `json:"chunk_id"`    // Теперь это тоже int64!
+    DocumentID  int64     `json:"document_id"` // Уже исправили на int64
+    SourceName  string    `json:"source_name"`
+    Title       string    `json:"title"`
+    Content     string    `json:"content"`
+    URL         string    `json:"url"`
+    PublishedAt time.Time `json:"published_at"`
 }
-
 type SearchLog struct {
 	ID          int64     `json:"id"`
 	UserID      int64     `json:"user_id"`

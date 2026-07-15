@@ -20,8 +20,8 @@ func NewSearchMockRepository(pool *pgxpool.Pool) domain.SearchRepository {
 		pool: pool,
 		posts: []domain.Post{
 			{
-				ChunkID:     "chunk_1",
-				DocumentID:  "doc_101",
+				ChunkID:    1,
+				DocumentID:  101,
 				SourceName:  "history_woman",
 				Title:       "Ада Лавлейс: Первая в истории программистка",
 				Content:     "Ада Лавлейс, дочь поэта Джорджа Байрона, стала известна благодаря описанию вычислительной машины Чарльза Бэббиджа. Она составила первую в мире программу для этой машины, заложив основы алгоритмизации и концепции циклов.",
@@ -29,8 +29,8 @@ func NewSearchMockRepository(pool *pgxpool.Pool) domain.SearchRepository {
 				PublishedAt: time.Now().Add(-24 * time.Hour),
 			},
 			{
-				ChunkID:     "chunk_2",
-				DocumentID:  "doc_102",
+				ChunkID:     2,
+				DocumentID:  102,
 				SourceName:  "history_woman",
 				Title:       "Мария Кюри и открытие радия",
 				Content:     "Мария Склодовская-Кюри — первая женщина-лауреат Нобелевской премии и единственный учёный, получивший её в двух разных науках: физике и химии. Совместно с Пьером Кюри она открыла новые элементы — полоний и радий.",

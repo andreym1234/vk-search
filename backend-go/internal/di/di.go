@@ -14,7 +14,7 @@ import (
 	"vk-search/internal/app/search"
 	"vk-search/internal/app/stats"
 	"vk-search/internal/infrastructure/config"
-	"vk-search/internal/infrastructure/mocks"
+	"vk-search/internal/infrastructure/opensearch"
 	"vk-search/internal/infrastructure/postgres"
 	"vk-search/internal/infrastructure/llm"
 )
@@ -34,7 +34,8 @@ func BuildApp() *fx.App {
 			postgres.NewHealthRepository,
 			postgres.NewStatsRepository,
 			postgres.NewDocumentRepository, 
-			mocks.NewSearchMockRepository,
+			opensearch.NewOpenSearchClient,
+			opensearch.NewOpenSearchRepository,
 			llm.NewLLMClient,          
 
 			// 3. Юзкейсы (Бизнес-логика / Слой приложения)

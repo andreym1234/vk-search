@@ -24,6 +24,10 @@ type Config struct {
 	llmModel            string
 	llmTimeoutSeconds   int
 	llmMaxContextChars  int
+
+	// OpenSearch настройки
+    osURL   string
+    osIndex string
 }
 
 func Load() (*Config, error) {
@@ -70,6 +74,9 @@ func Load() (*Config, error) {
 		llmModel:           os.Getenv("LLM_MODEL"),
 		llmTimeoutSeconds:  llmTimeout,
 		llmMaxContextChars: llmMaxChars,
+
+		osURL:   os.Getenv("OPENSEARCH_URL"),
+        osIndex: os.Getenv("OPENSEARCH_INDEX"),
 	}
 
 	return cfg, nil
@@ -128,4 +135,18 @@ func (c *Config) GetLLMTimeout() int {
 
 func (c *Config) GetLLMMaxContextChars() int {
 	return c.llmMaxContextChars
+}
+
+func (c *Config) GetOpenSearchURL() string {
+    if c.osURL == "" {
+        return "http://localhost:9200" // Дефолт для локальной разработки
+    }
+    return c.osURL
+}
+
+func (c *Config) GetOpenSearchIndex() string {
+    if c.osIndex == "" {
+        return "vk_chunks" // Твое имя индекса
+    }
+    return c.osIndex
 }

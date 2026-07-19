@@ -1,4 +1,3 @@
-```markdown
 # VK Search
 
 Учебный проект для практики VK Education.
@@ -125,6 +124,3 @@ docker-compose down -v
 
 Все запросы к методам `/search` и `/ask` автоматически фиксируются в таблице `search_logs` базы данных PostgreSQL для аудита действий пользователей.
 
-```
-
-```
